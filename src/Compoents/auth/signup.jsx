@@ -1,7 +1,55 @@
 import {Card,Input,Checkbox,Button,Typography,CardBody,CardHeader} from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import img from '../../assets/book.jpg'
+import { useState } from "react"
+import axios from 'axios';
+import Swal from "sweetalert2";
+
   export function SignUp() {
+    const [details,setDetails] = useState({});
+    
+    async function fetchData() {
+      axios.post('http://localhost:8088/api/auth/sign-up', details)
+        .then(response => {
+          sessionStorage.setItem("details",response.data);
+          document.querySelectorAll(".inp")?.forEach(element => {
+            element.value="";
+          });
+          setDetails({});
+        })
+        .catch(error => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong !',
+          });
+        console.error(error)});
+    } 
+
+    function handleSubmit(){
+      const { username, email, password } = details;
+      const emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+      if (!username || !email || !password) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Please fill in all fields!',
+        });
+      }else if(!emailPattern.test(email)){
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Please enter a valid email address !',
+        });
+      }else{
+        fetchData();
+      }
+    }    
+
+    function handleChange(e){
+      const {name,value} = e.target;
+      setDetails({...details,[name]:value})
+    }
     return (
     <>
     <img
@@ -18,12 +66,12 @@ import img from '../../assets/book.jpg'
         </CardHeader>
         <form className="mt-8 mb-2 w-80 max-w-screen-lg  ">
           <div className="mb-4 flex flex-col gap-6">
-            <Input color="black" size="lg" label="Name" />
-            <Input color="black" size="lg" label="Email" />
-            <Input color="black" type="password" size="lg" label="Password" />
+            <Input type="text" name="username" color="black" size="lg" label="Name" className="inp" onChange={handleChange}/>
+            <Input type="email" name="email"  color="black" size="lg" label="Email" className="inp" onChange={handleChange}/>
+            <Input name="password" color="black" type="password" size="lg" label="Password" className="inp" onChange={handleChange}/>
           </div>
           <div className="flex justify-center items-center">
-            <Button className="mt-6 " >
+            <Button className="mt-6 " onClick={handleSubmit}>
                 Register
             </Button>
           </div>

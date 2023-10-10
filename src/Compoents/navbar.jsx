@@ -8,10 +8,12 @@ const profileMenuItems = [
   {
     label: "Edit Profile",
     icon: Cog6ToothIcon,
+    onclick:()=>{}
   },    
   {
     label: "Sign Out",
     icon: PowerIcon,
+    onclick:()=>{sessionStorage.clear();}
   },
 ];
  
@@ -44,12 +46,12 @@ function ProfileMenu() {
         </Button>
       </MenuHandler>
       <MenuList className="p-1">
-        {profileMenuItems.map(({ label, icon }, key) => {
+        {profileMenuItems.map(({ label, icon,onclick }, key) => {
           const isLastItem = key === profileMenuItems.length - 1;
           return (
             <MenuItem
               key={label}
-              onClick={closeMenu}
+              onClick={onclick}
               className={`flex items-center gap-2 rounded ${
                 isLastItem
                   ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
@@ -113,7 +115,7 @@ export function NavigationBar() {
   }, []);
  
   return (
-    <Navbar className="fixed top-3 left-[200px] mx-auto max-w-screen-xl p-4 lg:rounded-full lg:pl-6 lg:mt-3">
+    <Navbar className="fixed  w-[90%] top-0.5 z-50 lg:left-[100px] mx-auto  lg:p-4 lg:rounded-full lg:pl-6 lg:mt-3">
       <div className="relative mx-auto flex items-center text-blue-gray-900">
         <Typography
           as="a"
