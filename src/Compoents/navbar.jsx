@@ -1,7 +1,7 @@
 import React from "react";
 import {Navbar,Typography,Button,Menu,MenuHandler,MenuList,MenuItem,Avatar,Card,IconButton,Collapse} from "@material-tailwind/react";
 import {UserCircleIcon,ChevronDownIcon,Cog6ToothIcon,Bars2Icon,PowerIcon} from "@heroicons/react/24/outline";
-import {routes} from '../routes'
+import {routes,AdminRoute} from '../routes'
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 // profile menu component
@@ -66,7 +66,7 @@ function ProfileMenu() {
               <Typography
                 as="span"
                 variant="small"
-                className="font-normal"
+                className="font-territory"
                 color={isLastItem ? "red" : "inherit"}
               >
                 {label}
@@ -82,16 +82,17 @@ function ProfileMenu() {
 // nav list component
  
 function NavList() {
+  const {isAdmin}=useAuth();
   return (
     <ul className="mb-4 mt-2 flex flex-col gap-4 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center">
-      {routes.map(({ label, icon,path }, key) => {  
+      {(isAdmin?[...routes,...AdminRoute]:routes)?.map(({ label, icon,path }, key) => {  
         if(label&&icon)      
           return ( <Link key={label} to={path}>
                     <Typography
                       key={label}
                       variant="small"
                       color="blue-gray"
-                      className="font-sans text-[16px]"
+                      className="font-territory text-[16px]"
                     >
                       <MenuItem className="flex items-center gap-2 lg:rounded-full">
                         {React.createElement(icon, { className: "h-[18px] w-[18px]" })}{" "}
@@ -117,12 +118,12 @@ export function NavigationBar() {
   }, []);
  
   return (
-    <Navbar className=" bg-black/10  w-[90%]  z-50  mx-auto  lg:rounded-full ">
+    <Navbar className=" bg-black/10  md:translate-y-3 w-[90%]  z-50  mx-auto  lg:rounded-full ">
       <div className="relative mx-auto flex items-center text-blue-gray-900">
         <Typography
           as="a"
           href="#"
-          className="mr-4 ml-2 cursor-pointer py-1.5 font-bold"
+          className="mr-4 ml-2 cursor-pointer py-1.5  font-primary "
         >
           K2Store
         </Typography>

@@ -1,5 +1,7 @@
-import {BookOpenIcon,HomeIcon,CodeBracketSquareIcon} from "@heroicons/react/24/outline";
+import {BookOpenIcon,HomeIcon,CodeBracketSquareIcon,PlusIcon} from "@heroicons/react/24/outline";
 import {Home,Books,Mybooks,EditProfile} from './Compoents/user'
+import {Bookadd} from './Compoents/Admin'
+
 export const routes = [
     {
       path:"/home",
@@ -9,7 +11,7 @@ export const routes = [
     },
     {
       path:"/Books",
-      label: "More books",
+      label: "Books",
       icon: BookOpenIcon,
       component:<Books/>
     },
@@ -24,3 +26,13 @@ export const routes = [
       component:<EditProfile/>
     },
   ];
+
+
+export const AdminRoute =[
+  {
+    path:"/add-books",
+    label: "Addbooks",
+    icon: PlusIcon,
+    component:<Bookadd/>
+  }
+]

@@ -70,18 +70,18 @@ export function EditProfile() {
     
   
 
-  return  <div className="  flex md:flex-row flex-col p-5 justify-center md:gap-36 gap-20 items-center lg:min-h-[90vh]">
+  return  <div className="flex md:flex-row flex-col p-5 justify-center md:gap-36 gap-20 items-center lg:min-h-[90vh]">
       
             <div className="md:w-[30%] w-[80%] flex flex-col md:gap-14 mt-6 md:mt-0">
-              <Typography variant="h4" color="blue-gray">
-              🖐️Hello ,<span className="text-[30px] uppercase text-black/60 font-serif">{user.username } </span>
+              <Typography variant="h4" color="blue-gray" className="font-primary">
+              Hello🖐️!  ,<span className="text-[30px] uppercase text-black/60 font-territory">{user.username } </span>
               </Typography>
               <img src={img} alt="jijiji" className="" />
             </div>
 
             <div className="md:w-[40%] w-[90%]">
               <Card className="md:p-10 md:px-20 p-8 bg-black/5"  shadow={true}>
-                <Typography variant="h4" color="blue-gray" className="text-center">
+                <Typography variant="h4" color="blue-gray" className="text-center font-primary">
                   Edit your profile
                 </Typography>
                   <div className="mt-6  flex flex-col gap-5">
