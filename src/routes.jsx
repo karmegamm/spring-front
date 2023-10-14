@@ -1,16 +1,16 @@
-import {CubeTransparentIcon,UserCircleIcon,CodeBracketSquareIcon} from "@heroicons/react/24/outline";
-import {Home,Books,Mybooks} from './Compoents/user'
+import {BookOpenIcon,HomeIcon,CodeBracketSquareIcon} from "@heroicons/react/24/outline";
+import {Home,Books,Mybooks,EditProfile} from './Compoents/user'
 export const routes = [
     {
       path:"/home",
       label: "Home",
-      icon: UserCircleIcon,
+      icon: HomeIcon,
       component:<Home/>
     },
     {
       path:"/Books",
       label: "More books",
-      icon: CubeTransparentIcon,
+      icon: BookOpenIcon,
       component:<Books/>
     },
     {
@@ -18,5 +18,9 @@ export const routes = [
       label: "Cart",
       icon: CodeBracketSquareIcon,
       component:<Mybooks/>
+    },
+    {
+      path:"/edit-profile",
+      component:<EditProfile/>
     },
   ];

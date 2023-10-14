@@ -3,9 +3,8 @@ Content-Type: application/json
 
 {
     "username":"Karmegam",
-    
     "email":"karmegam232734@gmail.com",
-    "password":"hello1234"
+    "password":"karmegam"
 }
 ###
 POST  http://localhost:8088/api/auth/sign-in
@@ -13,5 +12,16 @@ Content-Type: application/json
 
 {
     "email":"karmegam232734@gmail.com",
-    "password":"hello1234"
+    "password":"kuttyma"
+}
+
+###
+PUT  http://localhost:8088/api/auth/1
+Content-Type: application/json
+
+{
+    "username":"karmegam",
+    "email":"karmegam232734@gmail.com",
+    "old_password":"karmegam",
+    "current_password":"kar"
 }

@@ -1,21 +1,32 @@
 import {Card,Input,Checkbox,Button,Typography,CardBody,CardHeader} from "@material-tailwind/react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import img from '../../assets/book.jpg'
-import { useState } from "react"
+import { useState,useEffect} from "react"
 import axios from 'axios';
 import Swal from "sweetalert2";
+import { useAuth } from "../../context/AuthContext";
 
   export function SignUp() {
     const [details,setDetails] = useState({});
-    
+    const navigate = useNavigate();
+    const {login,isLoggedIn} = useAuth();
+
+    useEffect(()=>{
+      if(isLoggedIn){
+        navigate("/home");
+      }
+    },[])
+
     async function fetchData() {
       axios.post('http://localhost:8088/api/auth/sign-up', details)
         .then(response => {
-          sessionStorage.setItem("details",response.data);
+          sessionStorage.setItem("details",JSON.stringify(response.data));
+          login()
           document.querySelectorAll(".inp")?.forEach(element => {
             element.value="";
           });
           setDetails({});
+          navigate("/");
         })
         .catch(error => {
           Swal.fire({
