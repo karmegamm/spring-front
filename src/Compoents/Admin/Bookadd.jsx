@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext';
-import {Card,Input,Checkbox,Button,Typography, Textarea} from "@material-tailwind/react";
+import {Card,Input,Button,Typography, Textarea, Select,Option} from "@material-tailwind/react";
 import img from '../../assets/profile-book.svg'
 import {BookOpenIcon} from "@heroicons/react/24/solid";
 import axios from 'axios'
@@ -9,21 +9,37 @@ import Swal from 'sweetalert2'
 
 export  function Bookadd() {
   const [details,setDetails] = useState({});
+  const [titles,setTitles]=useState([]);
   const navigate = useNavigate();
   const {isAdmin} = useAuth();
   useEffect(()=>{
     if(!isAdmin){
       navigate('/home')
     }
+    axios.get(`http://localhost:8088/books/get-all-titles-only`)
+      .then(response => {
+        setTitles(response.data)
+      })
+      .catch(error => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong !',
+        });
+      })
   },[])
-
   
   function handleChange(e){
-    const {name,value,files} = e.target;
-    if(name==='bookImageFile'){
-      setDetails({...details,[name]:e.target.files[0]});
-    }else{
-      setDetails({...details,[name]:value});
+    if(typeof e ==='string'){
+      setDetails({...details,title:e});
+    }
+    else{
+      const {name,value,files} = e.target;
+      if(name==='bookImageFile'){
+        setDetails({...details,[name]:e.target.files[0]});
+      }else{
+        setDetails({...details,[name]:value});
+      }
     }
   }
 
@@ -48,10 +64,10 @@ export  function Bookadd() {
   function fetchData(formDataToSend){
     axios.post(`http://localhost:8088/books/save`, formDataToSend)
       .then(response => {
-        Swal.fire({
-          icon: 'success',
-          title: 'Update Successfully ..!',
-        });
+          Swal.fire({
+            icon: 'success',
+            title: 'Uploaded Successfully ..!',
+          });
         setDetails({});
         document.querySelectorAll(".inp")?.forEach(element => {
           element.value="";
@@ -68,7 +84,6 @@ export  function Bookadd() {
   console.log(details);
   return (
     <div className='flex md:flex-row flex-col p-5 justify-center md:gap-36 gap-20 items-center lg:min-h-[90vh]'>
-     
       <div className="md:w-[40%] w-[90%]">
         <Card className="md:p-6 md:px-20 p-8 bg-white/80"  shadow={true}>
           <Typography variant="h4" color="blue-gray"  className="text-center font-territory flex justify-center items-center gap-3">
@@ -77,7 +92,22 @@ export  function Bookadd() {
             <div className="mt-6  flex flex-col gap-5">
               <Input className="inp" size="lg" name="bookName" onChange={handleChange} label="bookName" />
               <Input className="inp" size="lg" name="author" onChange={handleChange}  label="author" />
-              <Input className="inp" type="text" name="title" onChange={handleChange} size="lg" label="title" />
+              <Select 
+                name="title"  
+                label="title" 
+                onChange={handleChange}
+                selected={(element) =>
+                  element &&
+                  React.cloneElement(element, {
+                    disabled: true,
+                    className:
+                      "flex items-center opacity-100 px-0 gap-2 pointer-events-none",
+                  })
+                }>
+                {titles.map(({id,title},index)=>
+                    <Option key={index} value={id.toString()}>{title}</Option>
+                  )}  
+              </Select>
               <div className='flex  md:flex-row flex-col gap-5 md:justify-center md:items-center  md:gap-3'>
                 <Input className="inp" type="text" name="price" onChange={handleChange} size="lg" label="price" />
                 <Input className="inp" type="text" name="stockQuantity" onChange={handleChange} size="lg" label="stockQuantity" />

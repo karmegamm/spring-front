@@ -3,6 +3,7 @@ import img from '../../assets/profile-book.svg'
 import {Card,Input,Checkbox,Button,Typography} from "@material-tailwind/react";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import {PencilSquareIcon} from "@heroicons/react/24/solid";
 import axios from 'axios'
 import Swal from 'sweetalert2'
 
@@ -73,16 +74,16 @@ export function EditProfile() {
   return  <div className="flex md:flex-row flex-col p-5 justify-center md:gap-36 gap-20 items-center lg:min-h-[90vh]">
       
             <div className="md:w-[30%] w-[80%] flex flex-col md:gap-14 mt-6 md:mt-0">
-              <Typography variant="h4" color="blue-gray" className="font-primary">
-              Hello🖐️!  ,<span className="text-[30px] uppercase text-black/60 font-territory">{user.username } </span>
+              <Typography variant="h4" color="blue-gray" className="font-primary ">
+              Hello🖐️!  ,<span className="text-[30px] lg:ml-5 uppercase text-black/60 shadow-xl border border-teal-900 rounded-full px-6 font-territory">{user.username } </span>
               </Typography>
-              <img src={img} alt="jijiji" className="" />
+              <img src={img} alt="jijiji" className=" " />
             </div>
 
             <div className="md:w-[40%] w-[90%]">
-              <Card className="md:p-10 md:px-20 p-8 bg-black/5"  shadow={true}>
-                <Typography variant="h4" color="blue-gray" className="text-center font-primary">
-                  Edit your profile
+              <Card className="md:p-10 md:px-20 p-8 bg-white/80"  shadow={true}>
+                <Typography variant="h4" color="blue-gray" className="text-center font-primary flex justify-center items-center gap-6">
+                  <PencilSquareIcon color="orange" className="w-7 h-7" />Edit your profile
                 </Typography>
                   <div className="mt-6  flex flex-col gap-5">
                     <Input className="inp" size="lg" name="username" onChange={handleChange} defaultValue={user.username} label="Name" />
@@ -90,7 +91,7 @@ export function EditProfile() {
                     <Input className="inp" type="password" name="old_password" onChange={handleChange} size="lg" label="current Password" />
                     <Input className="inp" type="password" name="current_password" onChange={handleChange} size="lg" label="New Password" />
                   </div>
-                  <Button className="mt-6" onClick={handleUpdate} fullWidth>
+                  <Button className="mt-6" onClick={handleUpdate} color="orange" fullWidth>
                     Update
                   </Button>
               </Card>

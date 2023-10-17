@@ -1,5 +1,5 @@
 import React from "react";
-import {Navbar,Typography,Button,Menu,MenuHandler,MenuList,MenuItem,Avatar,Card,IconButton,Collapse} from "@material-tailwind/react";
+import {Navbar,Typography,Button,Menu,MenuHandler,MenuList,MenuItem,IconButton,Collapse} from "@material-tailwind/react";
 import {UserCircleIcon,ChevronDownIcon,Cog6ToothIcon,Bars2Icon,PowerIcon} from "@heroicons/react/24/outline";
 import {routes,AdminRoute} from '../routes'
 import { Link, useNavigate } from "react-router-dom";
@@ -121,9 +121,8 @@ export function NavigationBar() {
     <Navbar className=" bg-black/10  md:translate-y-3 w-[90%]  z-50  mx-auto  lg:rounded-full ">
       <div className="relative mx-auto flex items-center text-blue-gray-900">
         <Typography
-          as="a"
-          href="#"
-          className="mr-4 ml-2 cursor-pointer py-1.5  font-primary "
+          className="mr-4 ml-2 cursor-pointer py-1.5 font-extrabold text-xl font-primary "
+          color="black"
         >
           K2Store
         </Typography>

@@ -13,8 +13,8 @@ function App() {
   useEffect(()=>{
     setIsAdmin(JSON.parse(sessionStorage.getItem("details"))?.isAdmin)
   })
-  console.log(isAdmin);
-  return <div className="bg-black/5">
+
+return <div className="bg-black/5">
       <div className=" max-w-full">
         <NavigationBar />  
       </div>

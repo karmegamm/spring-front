@@ -9,12 +9,10 @@ import { AuthProvider } from './context/AuthContext';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
-  <React.StrictMode>
-    <ThemeProvider>
-      <AuthProvider>
-      <App />
-      </AuthProvider>
-    </ThemeProvider>
-  </React.StrictMode>
+      <ThemeProvider>
+        <AuthProvider>
+        <App />
+        </AuthProvider>
+      </ThemeProvider>
   </BrowserRouter>
 )
