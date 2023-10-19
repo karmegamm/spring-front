@@ -30,16 +30,17 @@ export  function BooksTitles() {
         }
     }
     
-    function handlePay(amount){
-        const options={
-            key:"",
-            key_secret:"",
-            amount:amount*100,
-            currency:"INR",
-            name:"K2BookStore",
-            description:"testing "
+
+    const createOrder = async (amount, openRazorpay) => {
+        try {
+          const response = await axios.get(`http://localhost:8088/orders/create/${amount}`);
+          console.log("data:",response.data);
+          openRazorpay(response.data);
+        } catch (error) {
+          console.error('Error creating order:', error);
         }
-    }
+      };
+
     return (
         <div className=' md:min-h-[87vh] md:px-14 md:py-5'>
             <Typography variant='h1' className="font-territory pt-5  pl-3 md:text-5xl  text-3xl">
@@ -47,7 +48,7 @@ export  function BooksTitles() {
             </Typography>
             <div className='grid md:grid-cols-2 gap-7 p-5'>
                {books.map((book)=>{
-                    return <BookCard book={book}/>
+                    return <BookCard book={book} createOrder={createOrder}/>
                 })}
             </div>
         </div>

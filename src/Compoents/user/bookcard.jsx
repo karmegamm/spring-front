@@ -1,10 +1,45 @@
 import {Card,CardBody,Typography,Tooltip, Button} from "@material-tailwind/react";
 import {CheckBadgeIcon, ShoppingCartIcon,BoltIcon} from "@heroicons/react/24/solid";
-import { Link } from "react-router-dom";
 
 
-  export function BookCard({book}) {
-    console.log(book);
+  export function BookCard({book,createOrder}) {
+
+
+    const openRazorpay = (orderID) => {
+        if (!orderID) {
+          console.error('Order ID is not available.');
+          return;
+        }
+
+        const options={
+            key:'rzp_test_JK3GBwSeEqG8mr',
+            order_id: orderID,
+            amount:book.price*100,
+            currency:"INR",
+            image: `data:image/jpeg;base64,${book?.bookImage}`,
+            name:"K2BookStore",
+            description:"testing purpose",
+            handler:(response)=>{
+                alert(response.razorpay_payment_id);
+            },
+            prefill:{
+                name:"karmegam",
+                email:"karmegam@gmail.com",
+                contact:"8148774390"
+            },
+            notes:{
+                address:"Razorpay Corporate office",
+            },
+            theme:{
+                color:"#3399cc"
+            }
+        }
+
+        const rzpInstance = new Razorpay(options);
+        rzpInstance.open();
+       
+    };
+
     return (
     <Card className="relative">
         <CardBody className="flex h-full">
@@ -28,7 +63,7 @@ import { Link } from "react-router-dom";
                 <div className="flex flex-col justify-start items-start gap-2">
                     <span className="flex justify-center items-center md:gap-1 text-sm"><CheckBadgeIcon color="blue" className="w-5 h-4"/> <span className="font-primary text-[17px]">Assured</span></span>
                     <div className="flex gap-1">
-                        <Button size="sm" variant="outlined" color="blue"className="p-1 md:p-2 flex justify-center items-center md:gap-1 md:text-[10px]"><BoltIcon className="w-5 h-5"/>Buy now</Button>
+                        <Button onClick={() => createOrder(book?.price, orderID => openRazorpay(orderID))} size="sm" variant="outlined" color="blue"className="p-1 md:p-2 flex justify-center items-center md:gap-1 md:text-[10px]"><BoltIcon className="w-5 h-5"/>Buy now</Button>
                         <Button size="sm" color="deep-orange" variant="gradient" className="p-1  md:p-2 flex justify-center items-center md:gap-1 md:text-[10px]"><ShoppingCartIcon className="w-5 h-5"/>Add to Cart</Button>
                     </div>
                 </div>
