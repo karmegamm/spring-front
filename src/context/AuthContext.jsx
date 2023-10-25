@@ -20,6 +20,7 @@ export function AuthProvider({ children }) {
     sessionStorage.removeItem('details');
     setIsLoggedIn(false);
   };
+  
   return (
     <AuthContext.Provider value={{ isLoggedIn, login, logout,setIsAdmin,isAdmin }}>
       {children}

@@ -16,7 +16,7 @@ export const routes = [
       component:<Books/>
     },
     {
-      path:"/my-books",
+      path:"/my-cart",
       label: "Cart",
       icon: ShoppingCartIcon,
       component:<Mybooks/>

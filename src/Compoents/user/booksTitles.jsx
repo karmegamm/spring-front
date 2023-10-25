@@ -3,12 +3,16 @@ import React, { useEffect,useState } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios';
 import { BookCard } from './bookcard';
+import {useAuth} from '../../context/AuthContext'
+import Swal from 'sweetalert2'
+
 
 export  function BooksTitles() {
     const {title} = useParams();
     const[books,setBooks]= useState([]);
     const[page,setPage] = useState(0);
-    
+    const { isLoggedIn,refresh } = useAuth();
+
     useEffect(()=>{
         axios.get(`http://localhost:8088/books/getbooksbytitles?title=${title}&page=${page}&size=5`)
         .then(response => {
@@ -32,12 +36,20 @@ export  function BooksTitles() {
     
 
     const createOrder = async (amount, openRazorpay) => {
-        try {
-          const response = await axios.get(`http://localhost:8088/orders/create/${amount}`);
-          console.log("data:",response.data);
-          openRazorpay(response.data);
-        } catch (error) {
-          console.error('Error creating order:', error);
+        if(isLoggedIn){
+            try {
+            const response = await axios.get(`http://localhost:8088/orders/create/${amount}`);
+            console.log("data:",response.data);
+            openRazorpay(response.data);
+            } catch (error) {
+            console.error('Error creating order:', error);
+            }
+        }else{
+            Swal.fire({
+                icon: 'error',
+                title: "You're not Logged in!",
+                text: 'Please Sign-in or Signup ..',
+              });
         }
       };
 
